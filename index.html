@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-aabb-collider-component@3.2.0/dist/aframe-aabb-collider-component.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src = "portal.js"></script>
+  </head>
+  <body>
+    <a-scene id="home" background="color: #FAFAFA" physics>
+      
+      <!--Ground Plane-->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="gray" material="transparent:true" shadow></a-plane>
+      
+      <!-- Portal1 is connected to Portal2. A camera with id "playerId-portalId" at the portal's location will render its texture to a plane in front of the portal. The texture will updated based on the player's distance from the portal and orientation-->
+      <a-entity position="-6.0 1.6 -5" rotation="0 90 0" portal="cameraColor:red; portalFaceColor:orange; portalFrameColor:red; destinationPortalId:portal2" id="portal1"></a-entity>
+      <a-entity position="6.0 1.6 -5" rotation="0 -30 0" portal="cameraColor:blue; portalFaceColor:skyblue; portalFrameColor:#1ac6ff; destinationPortalId:portal1" id="portal2"></a-entity>
+      
+      <!--Portal3 is connected to itself. Its like a mirror. If you pass through it you just walk out of the same portal in the opposite direction (with a 180-degree turn). 
+      This is different from being reflected the a light ray incident on a mirror. More like a corner reflected where you get reflected on a parallel path-->
+      <a-entity position="0.0 1.6 -8" rotation="0 0 0" portal="cameraColor:black; portalFaceColor:skyblue; portalFrameColor:black; destinationPortalId:portal3" id="portal3"></a-entity>
+      
+      <!--Some objects as spatial reference when figuring out where you've teleported-->
+      <a-box position="-4.0 1.6 -3" color="red"></a-box>
+      <a-box position="4.0 1.6 -2" color="blue"></a-box>
+      
+      <a-entity id="player-rig">
+      <a-entity id="player" camera="active: true" look-controls wasd-controls position="0 1.6 0">
+        <a-cylinder id="player-body" radius="0.2" height="1.7">
+        </a-cylinder>
+      </a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
