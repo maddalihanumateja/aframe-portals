@@ -81,7 +81,7 @@
           this.el.appendChild(portalFrame);
           
           var portalFace = document.createElement("a-plane");
-          portalFace.object3D.position.add(new THREE.Vector3(0,0,1));
+          portalFace.object3D.position.add(new THREE.Vector3(0,0,0.6));
           portalFace.setAttribute("height", this.data.height-0.01);
           portalFace.setAttribute("width", this.data.width-0.01);
           portalFace.setAttribute("visible", false);
