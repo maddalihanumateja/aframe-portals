@@ -29,13 +29,22 @@
           this.el.object3D.rotation.y = this.el.object3D.rotation.y-2*sourceOrientation.y+Math.PI+ destinationOrientation.y;
           
           //Update Portal View
+          const renderer = this.el.sceneEl.renderer;
+          const currentRenderTarget = renderer.getRenderTarget();
+          const currentXrEnabled = renderer.xr.enabled;
+          const currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
+
+          renderer.xr.enabled = false;
+          renderer.shadowMap.autoUpdate = false;
           
-          this.el.sceneEl.renderer.setRenderTarget(this.renderTarget);
-          this.el.sceneEl.renderer.render(this.el.sceneEl.object3D, this.myCamera);
+          renderer.setRenderTarget(this.renderTarget);
+          renderer.render(this.el.sceneEl.object3D, this.myCamera);
           this.targetPlane.material = new THREE.MeshBasicMaterial({
     	      map: this.renderTarget.texture});
-		      this.el.sceneEl.renderer.setRenderTarget(null);
-          this.el.sceneEl.renderer.render(this.el.sceneEl.object3D, this.myCamera);
+
+          renderer.xr.enabled = currentXrEnabled;
+          renderer.shadowMap.autoUpdate = currentShadowAutoUpdate;
+          renderer.setRenderTarget(currentRenderTarget);
           
         },
         init:function(){
